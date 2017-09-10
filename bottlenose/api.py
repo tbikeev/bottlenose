@@ -271,7 +271,7 @@ class AmazonCall(object):
             else:
                 response_text = response.read()
         else:
-            if "gzip" in response.info().getheader("Content-Encoding"):
+            if response.info().getheader("Content-Encoding") and "gzip" in response.info().getheader("Content-Encoding"):
                 gzipped_file = gzip.GzipFile(fileobj=StringIO(response.read()))
                 response_text = gzipped_file.read()
             else:
