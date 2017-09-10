@@ -65,18 +65,18 @@ except ImportError:
     pass
 
 SERVICE_DOMAINS = {
-    'CA': ('webservices.amazon.ca', 'xml-ca.amznxslt.com'),
-    'CN': ('webservices.amazon.cn', 'xml-cn.amznxslt.com'),
-    'DE': ('webservices.amazon.de', 'xml-de.amznxslt.com'),
-    'ES': ('webservices.amazon.es', 'xml-es.amznxslt.com'),
-    'FR': ('webservices.amazon.fr', 'xml-fr.amznxslt.com'),
-    'IN': ('webservices.amazon.in', 'xml-in.amznxslt.com'),
-    'IT': ('webservices.amazon.it', 'xml-it.amznxslt.com'),
-    'JP': ('webservices.amazon.co.jp', 'xml-jp.amznxslt.com'),
-    'UK': ('webservices.amazon.co.uk', 'xml-uk.amznxslt.com'),
-    'US': ('webservices.amazon.com', 'xml-us.amznxslt.com'),
-    'BR': ('webservices.amazon.com.br', 'xml-br.amznxslt.com'),
-    'MX': ('webservices.amazon.com.mx', 'xml-mx.amznxslt.com')
+    'CA': ('https://webservices.amazon.ca', 'xml-ca.amznxslt.com'),
+    'CN': ('https://webservices.amazon.cn', 'xml-cn.amznxslt.com'),
+    'DE': ('https://webservices.amazon.de', 'xml-de.amznxslt.com'),
+    'ES': ('https://webservices.amazon.es', 'xml-es.amznxslt.com'),
+    'FR': ('https://webservices.amazon.fr', 'xml-fr.amznxslt.com'),
+    'IN': ('https://webservices.amazon.in', 'xml-in.amznxslt.com'),
+    'IT': ('https://webservices.amazon.it', 'xml-it.amznxslt.com'),
+    'JP': ('https://webservices.amazon.co.jp', 'xml-jp.amznxslt.com'),
+    'UK': ('https://webservices.amazon.co.uk', 'xml-uk.amznxslt.com'),
+    'US': ('https://webservices.amazon.com', 'xml-us.amznxslt.com'),
+    'BR': ('https://webservices.amazon.com.br', 'xml-br.amznxslt.com'),
+    'MX': ('https://webservices.amazon.com.mx', 'xml-mx.amznxslt.com')
 }
 
 log = logging.getLogger(__name__)
@@ -185,8 +185,7 @@ class AmazonCall(object):
         else:
             signature = urllib.quote(b64encode(digest))
 
-        return ("https://" + service_domain + "/onca/xml?" +
-                quoted_strings + "&Signature=%s" % signature)
+        return (service_domain + "/onca/xml?" + quoted_strings + "&Signature=%s" % signature)
 
     def cache_url(self, **kwargs):
         """A simplified URL to be used for caching the given query."""
@@ -199,7 +198,7 @@ class AmazonCall(object):
 
         service_domain = SERVICE_DOMAINS[self.Region][0]
 
-        return "https://" + service_domain + "/onca/xml?" + _quote_query(query)
+        return service_domain + "/onca/xml?" + _quote_query(query)
 
     def _call_api(self, api_url, err_env):
         """urlopen(), plus error handling and possible retries.
